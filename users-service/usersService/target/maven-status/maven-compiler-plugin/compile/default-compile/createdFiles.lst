@@ -1,0 +1,5 @@
+com\starbugs\usersService\models\User.class
+com\starbugs\usersService\controllers\UserController.class
+com\starbugs\usersService\services\UserRepositoryService.class
+com\starbugs\usersService\repository\UsersRepository.class
+com\starbugs\usersService\UsersServiceApplication.class

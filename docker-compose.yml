@@ -1,0 +1,187 @@
+version: '3'
+services:
+
+  starbugscore-service:
+    build: 
+      context: ./users-service/usersService/
+      dockerfile: Dockerfile
+    container_name: starbugscore-service
+    restart: on-failure
+    ports:
+      - 8082:8082
+    depends_on:
+      - starbugscore-db
+      - discovery-service
+      - gateway-service
+      - kafka
+    networks:
+      - backend
+    environment: 
+      SPRING_DATASOURCE_USERNAME: starbugscoreuser
+      SPRING_DATASOURCE_PASSWORD: Magnum1piece
+    
+  starbugscore-db:
+    image: mysql:8.0
+    container_name: starbugscoredb
+    environment:
+      MYSQL_DATABASE: starbugscore
+      MYSQL_USER: starbugscoreuser
+      MYSQL_PASSWORD: Magnum1piece
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - 3311:3306
+    networks:
+      - backend
+    volumes:
+      - starbugscore-data:/srv/tickets/data/
+
+  tickets-service:
+    build: 
+      context: ./tickets-service/TicketService/
+      dockerfile: Dockerfile
+    container_name: tickets-service
+    restart: on-failure
+    ports:
+      - 8083:8083
+    depends_on:
+      - tickets-db
+      - discovery-service
+      - gateway-service
+    networks:
+      - backend
+    environment: 
+      SPRING_DATASOURCE_USERNAME: ticketuser
+      SPRING_DATASOURCE_PASSWORD: Magnum1piece
+    
+  tickets-db:
+    image: mysql:8.0
+    container_name: ticketsdb
+    environment:
+      MYSQL_DATABASE: tickets
+      MYSQL_USER: ticketuser
+      MYSQL_PASSWORD: Magnum1piece
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - 3306:3306
+    networks:
+      - backend
+    volumes:
+      - tickets-data:/srv/tickets/data/
+
+  workspaces-service:
+    build: 
+      context: ./workspace/
+      dockerfile: Dockerfile
+    container_name: workspaces-service
+    restart: on-failure
+    ports:
+      - 8084:8084
+    depends_on:
+      - workspaces-db
+      - discovery-service
+      - gateway-service
+    networks:
+      - backend
+    environment: 
+      SPRING_DATASOURCE_USERNAME: workspaceuser
+      SPRING_DATASOURCE_PASSWORD: Magnum1piece
+    
+  workspaces-db:
+    image: mysql:8.0
+    container_name: workspacesdb
+    environment:
+      MYSQL_DATABASE: workspaces
+      MYSQL_USER: workspaceuser
+      MYSQL_PASSWORD: Magnum1piece
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - 3310:3306
+    networks:
+      - backend
+    volumes:
+      - workspaces-data:/srv/workspaces/data/
+  
+  mailer-service:
+    build:
+      context: ./Mailer/
+      dockerfile: Dockerfile
+    container_name: mailer
+    restart: always
+    ports: 
+      - 8085:8085
+    depends_on: 
+      - kafka
+    networks: 
+      - backend
+
+  gateway-service:
+    build: 
+      context: ./API-Gateway/
+      dockerfile: Dockerfile
+    container_name: gateway-service
+    restart: on-failure
+    ports:
+      - 8080:8080
+    depends_on: 
+      - discovery-service
+    networks:
+      - backend
+      - frontend
+
+  discovery-service:
+    build: 
+      context: ./DiscoveryService/
+      dockerfile: Dockerfile
+    container_name: discovery-service
+    restart: on-failure
+    ports:
+      - 8081:8081
+    networks:
+      - backend
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    restart: always
+    ports:
+      - 2181:2181
+    networks:
+      - backend
+
+  kafka:
+    image: wurstmeister/kafka
+    restart: always
+    ports:
+      - 9092:9092
+    depends_on: 
+      - zookeeper
+    environment: 
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      
+    networks: 
+      - backend
+  
+  starbugsweb:
+    build:
+      context: ./StarBugsWeb/
+      dockerfile: Dockerfile
+    container_name: Starbugs-Web
+    restart: on-failure
+    ports: 
+      - 80:80
+    networks: 
+      - frontend
+
+networks:
+  backend:
+  frontend:
+
+volumes:
+   tickets-data:
+   workspaces-data:
+   starbugscore-data:
+   
+

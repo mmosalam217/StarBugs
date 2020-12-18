@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <form #loginForm="ngForm" (ngSubmit)="login()" class="py-5 p-5 border rounded mt-5 bg-white">
+                <h1 class="text-center text-success">Login into your StarBugs workspace</h1>
+                <div class="form-group">
+                    <label for="email">E-Mail: </label>
+                    <input type="email" required name="email" [(ngModel)]="credentials.email" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password: </label>
+                    <input type="password" name="password" required [(ngModel)]="credentials.password" class="form-control">
+                </div>
+                <a href="">Forget Password?</a>
+                <button class="btn btn-block btn-success mt-3"  type="submit">login</button>
+            </form>
+        </div>
+    </div>
+</div>

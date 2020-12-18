@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="row mt-3" *ngIf="tickets?.length > 0">
+        <div *ngFor="let ticket of tickets" class="col-md-8 offset-md-2  p-2 my-2 bg-white border rounded mt-3">
+            <div class="container">
+                <div class="row border-bottom py-2">
+                    <div class="col-md-6 d-inline">ID-<a class="nav-link d-inline">{{ticket.id}}</a>:<em> {{ticket.title}}</em></div>
+                    <div class="col-md-3">Status: {{ticket.status}} </div>
+                    <div class="col-md-3">
+                        <a [routerLink]="['/client/' + clientId + '/tickets/' + ticket.id]"
+                         class="nav-link d-inline">View Details</a>
+                    </div>
+                </div>
+                <div  class="row mt-2">
+                    <div class="col-md-6">
+                        <ul class="ticket-details">
+                            <li class="mb-3">Assignee: <a class="nav-link d-inline"
+                                 [routerLink]="['/client/' + clientId + '/browse']" [queryParams]="{assignee: ticket.assignee.assigneeID}">{{ticket.assignee.assigneeName}}</a>
+                            </li>
+                            <li class="mb-3">Reporter: <a class="nav-link d-inline"
+                                 [routerLink]="['/client/' + clientId + '/browse']" [queryParams]="{issuerID: ticket.issuerID}">{{ticket.issuerName}}</a>
+                            </li>
+                            <li class="mb-3">Severity: {{ticket.severity}}</li>
+                        </ul>
+                    </div>
+                 
+                    <div class="col-md-6">
+                        <ul class="ticket-details">
+                            <li class="mb-3">Project: <em>{{ticket.projectName}}</em></li>
+                            <li class="mb-3">Application: <em>{{ticket.appName}}</em></li>
+                            <li class="mb-3">Component: <em>{{ticket.componentName}}</em></li>
+                        </ul>
+                       
+                    </div>
+                </div>
+             
+            </div>
+      
+        </div>
+    </div>
+
+    
+    <div *ngIf="tickets?.length < 1" class="row mt-3 py-3">
+        <div class="col-md-8 offset-md-2 bg-white border rounded mt-3">
+            <em class="text-secondary justify-content-center">There are currently no HotBugs at your project..</em>
+        </div>
+    </div>
+</div>

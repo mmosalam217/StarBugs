@@ -1,0 +1,28 @@
+<mat-dialog-content>
+    <form #newProject="ngForm" (ngSubmit)="create()">
+        <div class="form-group">
+            <label for="name">Name: </label>
+            <input type="text" name="name" placeholder="Enter a unique project name" required minlength="5" class="form-control" [(ngModel)]="project.name">
+        </div>
+
+        <div class="form-group">
+            <label for="domain">Domain: </label>
+                <select name="domain" class="form-control" [(ngModel)]="project.domain">
+                    <option value="" disabled selected>--Choose Domain--</option>
+                    <option *ngFor="let domain of domains" [ngValue]="domain">{{domain}}</option>
+                </select>
+        </div>
+
+        <div class="form-group">
+            <label for="domain">Admin: </label>
+                <select name="admin" class="form-control" required [(ngModel)]="project_admin">
+                    <option value="" disabled selected>--Choose Project Admin--</option>
+                    <option *ngFor="let user of users" [ngValue]="user">{{user.firstName + ' ' + user.lastName}}</option>
+                </select>
+        </div>
+
+        <button class="btn btn-danger" type="button" (click)="close()">Close</button>
+        <button class="btn btn-primary float-right" type="submit">Create</button>
+
+    </form>
+</mat-dialog-content>

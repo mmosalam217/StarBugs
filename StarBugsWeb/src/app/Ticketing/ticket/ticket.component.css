@@ -1,0 +1,11 @@
+ul{
+    list-style-type: none;
+}
+
+#ticket-head{
+    padding: 0.3rem;
+}
+
+#attachment-manager:hover{
+    cursor: pointer;
+}

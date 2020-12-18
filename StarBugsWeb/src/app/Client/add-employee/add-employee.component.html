@@ -1,0 +1,30 @@
+<div class="container-fluid">
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <form #employeeForm="ngForm" (ngSubmit)="addEmployee()">
+                <div class="form-group">
+                    <label for="firstName">Firstname:</label>
+                    <input type="text" name="firstName" [(ngModel)]="employee.firstName" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Lastname:</label>
+                    <input type="text" name="lastName" [(ngModel)]="employee.lastName" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="username">Email:</label>
+                    <input type="email" name="username" [(ngModel)]="employee.username" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="role">Role:</label>
+                    <select name="role" required   class="form-control"  [(ngModel)]="employee.role">
+                        <option  value="" selected disabled>--Set Access Scope--</option>
+                        <option>Admin</option>
+                        <option>Regular</option>
+
+                    </select>
+                </div>
+                <button class="btn btn-success btn-block" type="submit">Add Employee</button>
+            </form>
+        </div>
+    </div>
+</div>

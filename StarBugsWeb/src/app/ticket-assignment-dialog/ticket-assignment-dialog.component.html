@@ -1,0 +1,19 @@
+<mat-dialog-content>
+    <form #assignmentForm = "ngForm">
+        <div class="form-group">
+            <label for="newAssignee">Assigne to: </label>
+            <select name="newAssignee" [(ngModel)]="newAssignee"  class="form-control">
+                <option  value="" disabled selected>{{currentAssignee.assigneeName}}</option>
+                <option *ngFor="let assignee of assigneeList" [ngValue]="assignee" >{{assignee.firstName + ' '+ assignee.lastName}}</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <div class="col-md-6">
+                <button class="btn btn-light float-left" (click)="close()">No, thanks</button>
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-success float-right" (click)="assign()">Assign</button>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>

@@ -1,0 +1,162 @@
+
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-md-7 offset-md-2">
+            <div class="container">
+                <div class="row p-2 mt-3 ml-2 bg-white border rounded">
+                    <button class="btn btn-sm btn-light mr-3" (click)="openDetailsEditor()"><fa-icon class="mr-1" size="1x" [icon]="editIcon"></fa-icon>Update</button>
+                    <button class="btn btn-sm btn-light mr-3" (click)="openAssignmentDialog()"><fa-icon class="mr-1" size="1x" [icon]="assignIcon"></fa-icon>Assign</button>
+                    <button class="btn btn-sm btn-light mr-3" (click)="assignToMe()"><fa-icon class="mr-1" size="1x" [icon]="assignToMeIcon"></fa-icon>Assign to me</button>
+                    <button class="btn btn-sm btn-light mr-3" (click)="follow()"> <fa-icon class="mr-1" size="1x" [icon]="followIcon"></fa-icon>Follow</button>
+                </div>
+            
+            
+                <div id="ticket-head"  class="row  p-2 mt-3 ml-2 bg-white border rounded">
+                        <div class="container">
+                            <div class="row border-bottom">
+                                <p class="text-dark font-weight-bold ml-2 mt-2" style="font-size: 1.1rem;">Details:</p>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                    <ul class="list-group">
+                                        <li class="mb-4">
+                                            <div class="d-inline-flex w-25 text-dark font-weight-bold">Title:</div>
+                                            <div class="d-inline-flex w-50 text-dark"><em>{{ticket?.title}}</em></div>
+                                        </li>
+                                        <li class="mb-4">
+                                            <div class="d-inline-flex w-25 text-dark font-weight-bold">Company:</div>
+                                            <div class="d-inline-flex w-50 text-dark">{{ticket?.clientName}}</div>
+                                        </li>
+                                        <li class="mb-4">
+                                            <div class="d-inline-flex  w-25 text-dark font-weight-bold">Issuer:</div>
+                                            <div class="d-inline-flex  w-50 text-dark">{{ticket?.issuerName}}</div>
+                                        </li>
+                                        <li class="mb-4">
+                                            <div class="d-inline-flex w-25 text-dark font-weight-bold">Assigned to:</div>
+                                            <div class="d-inline-flex w-50 text-dark">{{ticket?.assignee.assigneeName}}</div>
+                                        </li>
+                                        <li class="mb-4">
+                                            <div class="d-inline-flex w-25 text-dark font-weight-bold">Project:</div>
+                                            <div class="d-inline-flex w-50 text-dark">{{ticket?.projectName}}</div>
+                                        </li>
+                                        <li class="mb-4">
+                                            <div class="d-inline-flex w-25 text-dark font-weight-bold">Application:</div>
+                                            <div class="d-inline-flex w-50 text-dark">{{ticket?.appName}}</div>
+                                        </li>
+                                    </ul> 
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="list-group">
+                                        <li class="mb-4">
+                                            <div class="d-inline-flex w-25 text-dark font-weight-bold">ID:</div>
+                                            <div class="d-inline-flex w-50 text-dark">{{ticket?.id}}</div>
+                                        </li>
+                                        <li class="mb-4">
+                                            <div class="d-inline-flex w-25 text-dark font-weight-bold">Component:</div>
+                                            <div class="d-inline-flex w-50 text-dark">{{ticket?.componentName}}</div>
+                                        </li>
+                                        <li class="mb-4">
+                                            <div class="d-inline-flex  w-25 text-dark font-weight-bold">Severity:</div>
+                                            <div class="d-inline-flex  w-50 text-dark">{{ticket?.severity}}</div>
+                                        </li>
+                                        <li class="mb-4">
+                                            <div class="d-inline-flex w-25 text-dark font-weight-bold">Status:</div>
+                                            <div class="d-inline-flex w-50 text-dark"><em>{{ticket?.status}}</em></div>
+                                        </li>
+                                        <li class="mb-4">
+                                            <div class="d-inline-flex w-25 text-dark font-weight-bold">Created at:</div>
+                                            <div class="d-inline-flex w-50 text-dark">{{ticket?.createdAt | date: 'dd/MM/yyyy'}}</div>
+                                        </li>
+                                        <li class="mb-4">
+                                            <div class="d-inline-flex w-25 text-dark font-weight-bold">Updated at:</div>
+                                            <div class="d-inline-flex w-50 text-dark">{{ticket?.updatedAt | date: 'dd/MM/yyyy' }}</div>
+                                        </li>
+            
+                                    </ul> 
+                                </div>
+                        </div>
+                        </div>
+                   
+                                         
+                </div>
+            
+            
+                   <div class="row my-2 border rounded ml-2 p-2 bg-white">
+                        <div class="container border-bottom py-2 mb-1">
+                            <div class="row text-dark font-weight-bold" style="font-size: 1.1rem;">Description</div>
+                        </div>
+                        <div class="mt-2 p-3">
+                            <p class="text-dark">
+                                {{ticket?.desc}}
+                            </p>
+                        </div>
+                   </div>
+            
+                    <div class="row my-2 border rounded ml-2 p-2 bg-white">
+                        <div class="container border-bottom py-2 mb-1">
+                            <div class="row text-dark font-weight-bold" style="font-size: 1.1rem;">Attachments</div>
+                        </div>
+                        <div *ngFor="let attachment of ticket?.attachments" class="col-md-2  m-1">
+                            <img src={{attachment?.url}} alt="" (click)="openAttachmentViewer(attachment.url)" style="height: 100px; width: 100px; cursor: pointer;" class="img-thumbnail float-left">
+                        </div>
+                        <div class="col-md-2 m-1"   id="attachment-manager">
+                            <div class="img-thumbnail float-left" style="width: 100px; height: 100px;">
+                                <fa-icon class="d-flex justify-content-center mt-2"
+                                (click)="openUploadDialog()"  [icon]="uploadIcon" size="5x"></fa-icon>
+                            </div>
+                          
+                        </div>
+                    </div>
+            
+            
+                    <div class="row border rounded my-2 p-2 ml-2 bg-white" id="comments">
+                        <div class="container">
+                            <div class="row border-bottom">
+                                <h3 class="text-dark font-weight-bold">
+                                    Comments:
+                                </h3>
+                            </div>
+                            <div class="row">
+                                <em class="d-block text-secondary py-3" *ngIf="ticket?.comments.length < 1">There are no comments for this bug...</em>
+                        
+                                <div class="w-100" *ngIf="ticket?.comments?.length > 0">
+                                    <div class="border rounded p-2 my-2 bg-light  comment" *ngFor="let comment of ticket?.comments">
+                                        <span class="text-primary">@{{comment.commentatorName}}: </span>
+                                        <span class="text-secondary float-right">{{comment.commentDate | date:'dd.mm.yyyy hh:m'}}</span>
+                                        <span class="d-block  ml-2 text-dark text-left">{{comment.commentContent}}</span>
+                    
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <form class="w-100"  #commentForm="ngForm" (ngSubmit)="addComment()">
+                                    <div class="form-group">
+                                        <textarea placeholder="Add your comment here..." [(ngModel)]="newComment.commentContent" required minlength="5"
+                                         class="form-control" name="comment" id="" cols="50" rows="3"></textarea>
+                                        <button [disabled]="!commentForm.valid" type="submit"
+                                         class="btn btn-sm btn-primary float-right m-1">Comment</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                  </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mt-3">
+            <ul class="list-group">
+                <li class="list-group-item"><fa-icon size="1x" class="mr-1" [icon]="usersIcon"></fa-icon><span class="text-secondary">Followed By:</span></li>
+                <li class="list-group-item" *ngFor="let follow of ticket?.follows">
+                    <fa-icon size="1x" [icon]="followerIcon"></fa-icon><a class="nav-link d-inline">{{follow.followerName}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+  
+     
+</div>
+
+

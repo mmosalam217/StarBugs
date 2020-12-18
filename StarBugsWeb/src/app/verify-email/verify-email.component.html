@@ -1,0 +1,27 @@
+    <div class="container">
+        <div class="row mt-5 d-flex align-self-center">
+            <div class="col-md-6 offset-md-3">
+                <div class="border rounded bg-white py-2" *ngIf="loading">
+                    <p class="mt-2 text-dark text-center">Processing! Please wait few seconds...</p>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-3 offset-md-5">
+                                    <div class="spinner-border"  style="height: 3.5rem; width: 3.5rem;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                   
+                    <h3 *ngIf="verificationSuccess" class="mt-2 text-center"> You have verified your email successfully.
+                        You will be redirected to login into your new account.
+                    </h3>
+                    <h3 *ngIf="verificationFailed" class="mt-2 text-center"> Verification Failed! The link is expired, please request another one.
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+            
+       
+            
+       

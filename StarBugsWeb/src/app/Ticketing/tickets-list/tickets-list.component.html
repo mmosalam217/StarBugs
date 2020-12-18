@@ -1,0 +1,113 @@
+
+<div class="container">
+    <!--Ticket Filter-->
+    <div class="row">
+        <div class="col-md-8 offset-md-2 p-2 mt-3 border rounded bg-white">
+            <form #filterForm="ngForm"  (ngSubmit)="applyFilter()">
+                <h3 class="text-dark">Filters:</h3>
+                <div class="form-row">
+            
+                    <div class="form-group col-md-4">
+                        <label  for="title">Title:</label>
+                        <input type="text" name="title" class="form-control" [(ngModel)]="ticketRoot.title">
+                    </div>
+            
+                    <div class="form-group col-md-2">
+                        <label for="status">Status:</label>
+                        <select name="status" class="form-control" [(ngModel)]="ticketRoot.status">
+                            <option [ngValue]="s" *ngFor="let s of statusList">{{s}}</option>
+                        </select>
+                    </div>
+            
+                    <div class="form-group col-md-3">
+                        <label for="severity">Severity:</label>
+                        <select name="severity" class="form-control" [(ngModel)]="ticketRoot.severity">
+                            <option [ngValue]="severity" *ngFor="let severity of severities">{{severity}}</option>
+                        </select>
+                    </div>
+            
+                    <div class="form-group col-md-3">
+                        <label for="reporter">Reporter:</label>
+                        <select name="reporter" class="form-control" [(ngModel)]="ticketRoot.reporter">
+                            <option [ngValue]="person" *ngFor="let person of people">{{person.firstName + " " + person.lastName}}</option>
+                        </select>
+                    </div>
+                </div>
+            
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="project">Project:</label>
+                        <select name="project" class="form-control" [(ngModel)]="ticketRoot.project" (change)="onProjectChange($event)">
+                            <option [ngValue]="proj" *ngFor="let proj of projects">{{proj.name}}</option>
+                        </select>
+                    </div>
+            
+                    <div class="form-group col-md-3">
+                        <label for="application">Application:</label>
+                        <select name="application" class="form-control" [(ngModel)]="ticketRoot.app" (change)="onApplicationChange($event)">
+                            <option [ngValue]="app" *ngFor="let app of applications">{{app.name}}</option>
+                        </select>
+                    </div>
+            
+                    <div class="form-group col-md-3">
+                        <label for="component">Component:</label>
+                        <select name="component" class="form-control" [(ngModel)]="ticketRoot.component">
+                            <option [ngValue]="comp" *ngFor="let comp of components">{{comp.name}}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="assignee">Assignee:</label>
+                        <select name="assignee" class="form-control" [(ngModel)]="ticketRoot.assignee">
+                            <option [ngValue]="person" *ngFor="let person of people">{{person.firstName + " " + person.lastName}}</option>
+                        </select>
+                    </div>
+
+                </div>
+                    
+                    <button type="submit" class="btn btn-primary float-right">Browse</button>
+                    <button type="button" class="btn btn-info float right" (click)="filterForm.reset()">Reset</button>
+            </form>
+        </div>
+    </div>
+
+        <!-- Tickets List-->
+        <div class="row mt-3">
+            <div *ngFor="let ticket of tickets" class="col-md-8 offset-md-2 bg-white p-2 my-2 border rounded">
+                <div class="container">
+                    <div class="row border-bottom py-2">
+                        <div class="col-md-6 d-inline">ID-<a class="nav-link d-inline">{{ticket.id}}</a>:<em> {{ticket.title}}</em></div>
+                        <div class="col-md-3">Status: {{ticket.status}} </div>
+                        <div class="col-md-3">
+                            <a [routerLink]="['/client/' + clientId + '/tickets/' + ticket.id]"
+                             class="nav-link d-inline">View Details</a>
+                        </div>
+                    </div>
+                    <div  class="row mt-2">
+                        <div class="col-md-6">
+                            <ul class="ticket-details">
+                                <li class="mb-3">Assignee: <a class="nav-link d-inline"
+                                     [routerLink]="['/client/' + clientId + '/browse']" [queryParams]="{assignee: ticket.assignee.assigneeID}">{{ticket.assignee.assigneeName}}</a>
+                                </li>
+                                <li class="mb-3">Reporter: <a class="nav-link d-inline"
+                                     [routerLink]="['/client/' + clientId + '/browse']" [queryParams]="{issuerID: ticket.issuerID}">{{ticket.issuerName}}</a>
+                                </li>
+                                <li class="mb-3">Severity: {{ticket.severity}}</li>
+                            </ul>
+                        </div>
+                     
+                        <div class="col-md-6">
+                            <ul class="ticket-details">
+                                <li class="mb-3">Project: <em>{{ticket.projectName}}</em></li>
+                                <li class="mb-3">Application: <em>{{ticket.appName}}</em></li>
+                                <li class="mb-3">Component: <em>{{ticket.componentName}}</em></li>
+                            </ul>
+                           
+                        </div>
+                    </div>
+                 
+                </div>
+          
+            </div>
+        </div>
+</div>

@@ -1,0 +1,92 @@
+<mat-dialog-content>
+    <p class="text-left" *ngIf="bugCreationFailed">
+        {{errorMsg}}
+    </p>
+    <form [formGroup]="ticketForm" (ngSubmit)="create()">
+
+            <div class="form-group">
+                <label for="title">Title: </label>
+                <input type="text" placeholder="Enter Bug title..." required minlength="5" formControlName="title" class="form-control">
+            </div>
+        
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="client">Company: </label>
+                <input type="text" formControlName="client" [readOnly]="true" class="form-control">
+            </div>
+    
+            <div class="form-group col-md-6">
+                <label for="project">Project: </label>
+                <select formControlName="project" (change)="changeProject($event.target.value)" class="form-control">
+                    <option value="" disabled selected>--Choose Project--</option>
+                    <option *ngFor="let proj of projects" [ngValue]="proj">{{proj.name}}</option>
+                </select>
+            </div>
+          
+        </div>
+    
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="issuer">Issuer: </label>
+                <input type="text"  formControlName="issuer" [readOnly]="true"  class="form-control">
+            </div>
+    
+            <div class="form-group col-md-6">
+                <label for="assignee">Assigned to: </label>
+                <select formControlName="assignee"  class="form-control">
+                    <option  value="" disabled selected>--Choose Assignee--</option>
+                    <option *ngFor="let assignee of assigneeList" [ngValue]="assignee">{{assignee.firstName + ' '+ assignee.lastName}}</option>
+                </select>
+            </div>
+          
+        </div>
+    
+        <div class="form-row">
+           
+            <div class="form-group col-md-6">
+                <label for="app">Application: </label>
+                <select formControlName="app" (change)="changeApp($event.target.value)" class="form-control">
+                    <option value="" disabled selected>--Choose Application--</option>
+                    <option *ngFor="let app of apps" [ngValue]="app">{{app.name}}</option>
+                </select>
+            </div>
+    
+            <div class="form-group col-md-6">
+                <label for="component">Component: </label>
+                <select formControlName="component"  class="form-control">
+                    <option value="" disabled selected>--Choose Component--</option>
+                    <option [ngValue]="comp" *ngFor="let comp of componentList" >{{comp.name}}</option>
+                </select>
+            </div>
+        </div>
+    
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="status">Status: </label>
+                <input type="text" formControlName="status" [readOnly]="true" class="form-control">
+            </div>
+    
+            <div class="form-group col-md-6">
+                <label for="severity">Severity: </label>
+                <select  formControlName="severity" class="form-control">
+                    <option value="" disabled selected>--Choose Severity Level--</option>
+                    <option [ngValue]="sev" *ngFor="let sev of severities">{{sev}}</option>
+                </select>
+            </div>
+        </div>
+    
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="desc">Description: </label>
+                    <textarea  cols="80" rows="10" class="form-control" required minlength="10" formControlName="desc"></textarea>
+                </div>
+            </div>
+    
+            <button class="btn btn-danger" type="button" (click)="close()">close</button>
+            <button class="btn btn-success float-right" type="submit">Create</button>
+                   
+            
+    
+       
+    </form>
+</mat-dialog-content>

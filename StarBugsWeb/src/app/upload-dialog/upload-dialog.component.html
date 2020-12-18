@@ -1,0 +1,20 @@
+<mat-dialog-content>
+    <form #uploadForm = "ngForm">
+        <div class="input-group">
+            <div class="custom-file">
+                <input type="file" (change)="preview($event)" name="attachment"  class="custom-file-input">
+                <label class="custom-file-label mr-2" for="attachment">Upload File: </label>
+
+            </div>
+        </div>
+        <div *ngIf="attachment != null"  class="d-flex justify-content-center w-100 mt-2 preview">
+            <img [src]="attachment_url" style="height: 300px; width: 300px;" alt="" class="img-thumbnail">
+        </div>
+        <div class="my-3">
+            <button class="btn btn-success float-right" (click)="upload()" type="button">upload</button>
+            <button class="btn btn-light float-left" (click)="close()" type="submit">abort</button>
+        </div>
+
+    </form>
+  
+</mat-dialog-content>

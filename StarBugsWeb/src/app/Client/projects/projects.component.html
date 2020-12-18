@@ -1,0 +1,40 @@
+<div class="container">
+   
+    <div class="row my-2">
+        <div class="col-md-10 bg-white border rounded">
+            <div class="container">
+                <div class="row py-3" *ngIf="projects.length > 0">
+                    <div class="col-md-4" *ngFor="let proj of projects">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>{{proj.name}} <fa-icon class="float-right" style="cursor: pointer;"
+                                     (click)="openDeleteProjectDialog(proj.id)" [icon]="faTrash"></fa-icon></h4>
+                                
+                            </div>
+                            <div class="card-body">
+                                <div class="card-title">Applications: {{proj.applications.length}}</div>
+                            </div>
+                            <div class="card-footer">
+                                <a href="#"  class="btn btn-primary" [routerLink]="['/client/' + client_id + '/admin/projects/' + proj.id]">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row py-3" *ngIf="projects?.length < 1">
+                    <div class="col-md-12">
+                        <em class="text-secondary justify-content-center text-center">
+                            There are no projects at your workspace yet. Please start adding projects by clicking the add button on the left.
+                        </em>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <button mat-fab class="float-right"  (click)="openNewProjectDialog()" >
+                <fa-icon  [icon]="faPlus" size="2x"></fa-icon>
+            </button>
+        </div>
+       
+    </div>
+    
+</div>

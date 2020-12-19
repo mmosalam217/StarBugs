@@ -1,2 +1,8 @@
 **/application.properties
-/StarBugsWeb/node_modules/
+/**/node_modules/
+/node_modules
+./StarBugsWeb/e2e
+
+./StarBugsWeb/tslint
+./StarBugsWeb/karma.conf
+./StarBugsWeb/README
